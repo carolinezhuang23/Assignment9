@@ -101,13 +101,12 @@ def find_word(s, hash_table):
     i = hash_word(s, size)
     if hash_table[i] == s:
         return True
-    else:
-        step = step_size(s)
-        while hash_table[i] != "":
-            i = (i + step) % size
-            if hash_table[i] == s:
-                return True
-        return False
+    step = step_size(s)
+    while hash_table[i] != "":
+        i = (i + step) % size
+        if hash_table[i] == s:
+            return True
+    return False
 
 def is_reducible(s, hash_table, hash_memo):
     """
@@ -128,8 +127,7 @@ def is_reducible(s, hash_table, hash_memo):
         sub_word = s[:i] + s[i+1:]
         sub_words.append(sub_word)
     for word in sub_words:
-        if not find_word(word, hash_memo) and find_word(word, hash_table) \
-            and is_reducible(word, hash_table, hash_memo):
+        if find_word(word, hash_table) and is_reducible(word, hash_table, hash_memo):
             insert_word(s, hash_memo)
             return True
     return False
