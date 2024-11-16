@@ -80,14 +80,13 @@ def insert_word(s, hash_table):
     i = hash_word(s, size)
     if s in hash_table:
         return
-    elif hash_table[i] == "":
+    if hash_table[i] == "":
         hash_table[i] = s
         return
-    else:
-        step = step_size(s)
-        while hash_table[i] != "":
-            i = (i + step) % size
-        hash_table[i] = s
+    step = step_size(s)
+    while hash_table[i] != "":
+        i = (i + step) % size
+    hash_table[i] = s
 
 def find_word(s, hash_table):
     """
@@ -121,9 +120,7 @@ def is_reducible(s, hash_table, hash_memo):
           inserting s if reducible), otherwise returns False.
     """
     if len(s) == 1:
-        if s == "a" or s == "i" or s == "o":
-            return True
-        return False
+        return s in ("a", "i", "o")
     if find_word(s, hash_memo):
         return True
     sub_words =[]
@@ -131,7 +128,8 @@ def is_reducible(s, hash_table, hash_memo):
         sub_word = s[:i] + s[i+1:]
         sub_words.append(sub_word)
     for word in sub_words:
-        if find_word(word, hash_table) and is_reducible(word, hash_table, hash_memo):
+        if not find_word(word, hash_memo) and find_word(word, hash_table) \
+            and is_reducible(word, hash_table, hash_memo):
             insert_word(s, hash_memo)
             return True
     return False
