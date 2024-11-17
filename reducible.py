@@ -186,7 +186,7 @@ def main():
     while not is_prime(m):
         m += 1
     # populate the hash_memo with M blank strings
-    hash_memo = [""] * m
+    hash_memo = [""] * int(m)
     # create an empty list reducible_words
     reducible_words = []
     # for each word in the word_list recursively determine
