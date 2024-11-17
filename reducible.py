@@ -78,7 +78,7 @@ def insert_word(s, hash_table):
     """
     size = len(hash_table)
     i = hash_word(s, size)
-    if s in hash_table:
+    if hash_table[i] == s:
         return
     if hash_table[i] == "":
         hash_table[i] = s
@@ -86,6 +86,8 @@ def insert_word(s, hash_table):
     step = step_size(s)
     while hash_table[i] != "":
         i = (i + step) % size
+        if hash_table[i] == s:
+            return
     hash_table[i] = s
 
 def find_word(s, hash_table):
